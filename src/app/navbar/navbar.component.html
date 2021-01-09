@@ -1,0 +1,25 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a routerLink="/" class="navbar-brand">Tutorial</a>
+    <div>
+      <button
+        (click)="auth.loginWithRedirect()"
+        mat-raised-button
+        mat-button
+        color="primary"
+        *ngIf="!(auth.isAuthenticated$ | async)"
+      >
+        Login
+      </button>
+      <button
+        mat-raised-button
+        mat-button
+        color="warn"
+        (click)="logout()"
+        *ngIf="auth.isAuthenticated$ | async"
+      >
+        Logout
+      </button>
+    </div>
+  </div>
+</nav>

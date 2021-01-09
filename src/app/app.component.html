@@ -1,7 +1,11 @@
-<div class="container-fluid">
+<app-navbar></app-navbar>
+<div class="container-fluid" *ngIf="auth.isAuthenticated$ | async">
   <div class="row justify-content-center">
     <form [formGroup]="form" (ngSubmit)="Save()" class="form-content mt-5">
       <h2 class="d-flex justify-content-center mb-5">Microservices Tutorial</h2>
+
+      <input type="text" hidden formControlName="id" />
+
       <mat-form-field class="input-field">
         <mat-label>Name</mat-label>
         <input formControlName="name" matInput placeholder="Name..." />
@@ -15,5 +19,39 @@
         <button mat-raised-button mat-button color="primary">Save</button>
       </div>
     </form>
+  </div>
+</div>
+<div
+  class="container-fluid mt-2 col-xl-7 col-lg-7 col-md-7 col-sm-7"
+  *ngIf="auth.isAuthenticated$ | async"
+>
+  <div class="row m-2" *ngFor="let customer of customers">
+    <mat-card>
+      <mat-card-title>{{ customer.name }}</mat-card-title>
+      <mat-card-subtitle>{{ customer.email }}</mat-card-subtitle>
+      <mat-card-actions>
+        <button
+          mat-raised-button
+          mat-button
+          color="basic"
+          type="button"
+          (click)="EditCustomer(customer.id)"
+        >
+          <mat-icon>create</mat-icon>
+          EDIT
+        </button>
+
+        <button
+          mat-raised-button
+          mat-button
+          color="warn"
+          type="button"
+          (click)="DeleteCustomer(customer.id)"
+        >
+          <mat-icon>delete</mat-icon>
+          DELETE
+        </button>
+      </mat-card-actions>
+    </mat-card>
   </div>
 </div>
