@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-root',
@@ -10,9 +9,9 @@ import { AuthService } from '@auth0/auth0-angular';
 })
 export class AppComponent implements OnInit {
   form!: FormGroup;
-
+  API_URL: string = 'http://104.45.177.43:8080/';
   customers!: any[];
-  constructor(public http: HttpClient, public auth: AuthService) {}
+  constructor(public http: HttpClient) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -21,7 +20,7 @@ export class AppComponent implements OnInit {
       email: new FormControl(''),
     });
 
-    this.http.get('http://localhost:3000/').subscribe((customersResponse) => {
+    this.http.get(this.API_URL).subscribe((customersResponse) => {
       this.customers = customersResponse as any;
     });
   }
@@ -34,25 +33,23 @@ export class AppComponent implements OnInit {
     };
     console.log(this.form.value);
     if (obj.id == '' || obj.id == null) {
-      this.http.post('http://localhost:3000/', obj).subscribe((success) => {
+      this.http.post(this.API_URL, obj).subscribe((success) => {
         this.form.reset();
         this.form.markAsUntouched();
         this.form.markAsPristine();
         this.customers.push(success);
       });
     } else {
-      this.http
-        .put('http://localhost:3000/' + obj.id, obj)
-        .subscribe((success) => {
-          this.form.reset();
-          this.form.markAsUntouched();
-          this.form.markAsPristine();
+      this.http.put(this.API_URL + obj.id, obj).subscribe((success) => {
+        this.form.reset();
+        this.form.markAsUntouched();
+        this.form.markAsPristine();
 
-          const currentObjectIndex = this.customers.findIndex((customer) => {
-            return customer.id === obj.id;
-          });
-          this.customers.splice(currentObjectIndex, 1, obj);
+        const currentObjectIndex = this.customers.findIndex((customer) => {
+          return customer.id === obj.id;
         });
+        this.customers.splice(currentObjectIndex, 1, obj);
+      });
     }
   }
 
@@ -69,7 +66,7 @@ export class AppComponent implements OnInit {
   }
 
   DeleteCustomer(id: any) {
-    this.http.delete('http://localhost:3000/' + id).subscribe((success) => {
+    this.http.delete(this.API_URL + id).subscribe((success) => {
       var newCustomers = this.customers.filter((customer) => {
         return customer.id !== id;
       });

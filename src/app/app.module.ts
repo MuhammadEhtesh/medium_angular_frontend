@@ -12,11 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
-import { NavbarComponent } from './navbar/navbar.component';
-
 @NgModule({
-  declarations: [AppComponent, NavbarComponent],
+  declarations: [AppComponent],
   imports: [
     MatIconModule,
     BrowserModule,
@@ -28,25 +25,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     MatFormFieldModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-
-    AuthModule.forRoot({
-      domain: 'dev-p4jles0i.us.auth0.com',
-      clientId: 'Rrm8OURwwuHjp90PtoHQyXWXzskC2GGN',
-      cacheLocation: 'localstorage',
-      useRefreshTokens: true,
-      audience: 'muhammadehteshambhatti',
-      httpInterceptor: {
-        allowedList: [`${'http://localhost:3000/'}/*`],
-      },
-    }),
   ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthHttpInterceptor,
-      multi: true,
-    },
-  ],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,5 +1,4 @@
-<app-navbar></app-navbar>
-<div class="container-fluid" *ngIf="auth.isAuthenticated$ | async">
+<div class="container-fluid">
   <div class="row justify-content-center">
     <form [formGroup]="form" (ngSubmit)="Save()" class="form-content mt-5">
       <h2 class="d-flex justify-content-center mb-5">Microservices Tutorial</h2>
@@ -21,10 +20,7 @@
     </form>
   </div>
 </div>
-<div
-  class="container-fluid mt-2 col-xl-7 col-lg-7 col-md-7 col-sm-7"
-  *ngIf="auth.isAuthenticated$ | async"
->
+<div class="container-fluid mt-2 col-xl-7 col-lg-7 col-md-7 col-sm-7">
   <div class="row m-2" *ngFor="let customer of customers">
     <mat-card>
       <mat-card-title>{{ customer.name }}</mat-card-title>
