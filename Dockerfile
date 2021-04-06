@@ -1,8 +1,8 @@
 FROM node:12 AS build
 WORKDIR /app
-COPY package*.json .
+COPY package*.json ./
 RUN npm install
-COPY . .
+COPY . ./
 RUN npm run build --prod
 
 FROM nginx:1.15.8-alpine
