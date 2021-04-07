@@ -14,7 +14,7 @@ spec:
       containers:
       - name: angular-app
         imagePullPolicy: IfNotPresent
-        image: muhammadehteshambhatti/angular-app:v1 # you image file
+        image: muhammadehtesh/medium_angular_frontend:$(Build.BuildId) # your image file
         resources:
           limits:
             memory: "1Gi"
